@@ -26,7 +26,8 @@ def initialize_roomba():
     print("🔋 Waking Roomba and entering Full mode...")
     send_command(128)  # Start
     time.sleep(0.1)
-    send_command(132)  # Full mode
+    send_command(131)  # Safe mode
+    #send_command(132)  # Full mode, uncomment this and comment out the above to make your roomba more versatile. Beware, this can lead to massive battery problems
     time.sleep(0.1)
     # Test command: play a short beep to verify connection
     send_command(140, [3, 1, 64, 16])  # Define song 3
