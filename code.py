@@ -55,12 +55,13 @@ wifi.radio.connect(
 print("✅ Connected to Wi-Fi")
 print("📡 IP Address:", wifi.radio.ipv4_address)
 
+# Initialize Roomba
+initialize_roomba()
+
 # Play chime for Wi-Fi connection
 send_command(140, [0, 2, 72, 32, 76, 32])
 send_command(141, [0])
 
-# Initialize Roomba
-initialize_roomba()
 
 # === MQTT Setup ===
 aio_username = os.getenv("ADAFRUIT_AIO_USERNAME")
@@ -108,6 +109,9 @@ def detect_human(threshold=24.0):
             if temp >= threshold:
                 return True
     return False
+    #This code sets the threshold for detecting Humans to 24 degrees celcius.
+    #I found that just detecting one of the thermal sensors 64 outputs at this level was the most accurate
+    # way to determine if a person was there
 
 def obstacle_detected(threshold_mm=40):
     if vl53.data_ready:
@@ -116,6 +120,7 @@ def obstacle_detected(threshold_mm=40):
             vl53.clear_interrupt()
             return True
     return False
+    #You can modify the threshold here for how close you want the roomba to seek in a direction before stopping
 
 # === Feed Handler ===
 def handle_roomba_steering(client, feed_id, payload):
